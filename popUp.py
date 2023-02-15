@@ -5,7 +5,6 @@
 import tkinter as tk
 import random as r
 import playsound as p
-import time
 
 root = tk.Tk()
 
@@ -16,14 +15,14 @@ bullet = tk.PhotoImage(file='./bullethole.png')
 def create_popup():
     for i in range(r.randint(2,6)):
         #Random placement on screen
-        x = r.randint(0, root.winfo_screenwidth() - bullet.width())
-        y = r.randint(0, root.winfo_screenheight() - bullet.height())
+        x = r.randint(0, root.winfo_screenwidth() - bullet.width()//2)
+        y = r.randint(0, root.winfo_screenheight() - bullet.height()//2)
         popup = tk.Toplevel()
         popup.geometry(f"+{x}+{y}")
 
         #Creates more popups when user tries to close the window
         popup.protocol("WM_DELETE_WINDOW", lambda: create_popup())
-        #Keeps the window on top
+        #Keeps the popup on top of all windows
         popup.attributes("-topmost", True)
         #Creates more windows when clicked on
         popup.bind("<Button-1>", lambda event: create_popup())
@@ -35,9 +34,11 @@ def create_popup():
         #Makes background transparent
         popup.wm_attributes('-transparentcolor', 'white')
         label.pack()
+    #Sounds only once
     sound()
 
 def sound():
+    #Plays pew-pew sound effect
     p.playsound(sound='./pew-pew.mp3')
 
 #Parent bullethole
@@ -56,7 +57,7 @@ root.bind("<Button-1>", lambda event: create_popup())
 #Removes window manager toolbar
 root.overrideredirect(1)
 
-p.playsound(sound='./pew-pew.mp3')
+sound()
 
 #Formats the display
 label = tk.Label(root, image=bullet, bg='white')
