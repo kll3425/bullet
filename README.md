@@ -1,4 +1,4 @@
-Red Team Distraction Tool
+Bullethole Distraction Tool
 
 A distraction tool that creates persistant image pop-ups.
 
